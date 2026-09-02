@@ -1,0 +1,121 @@
+{
+  "$schema_note": "Six live slots per direction: palette, composition, typePosture, markTreatment, imagery, voice. Motion is deliberately absent as a seventh slot — the Ulysses corpus (130 stills) has no motion material, so a motion direction would be invented, not derived. Shipped hover values are a floor applied to every direction, not a per-direction choice. See ../SKILL.md for the full rule.",
+  "sharedInvariants": {
+    "accent": "exactly one accent color per direction; never a large-area background",
+    "planeSeparation": "1px hairline and tone only; no boxes, no elevation, no drop shadows",
+    "space": "active — rank by interval, never fill a gap because it exists",
+    "valuesStated": "every spacing/timing/size/colour that matters is written down, not implied",
+    "hover": {
+      "note": "floor, not a direction axis — provenance: inherited from shipped code",
+      "microHover": "160ms",
+      "easing": "power3.out (cubic-bezier(.22,1,.36,1))",
+      "primaryButton": "accent fill rises from below, translateY(101% -> 0), no glow",
+      "logo": "translateY(-3px) + opacity",
+      "navLink": "opacity shift + hairline underline reveal",
+      "rule": "hover never introduces a second primary action"
+    },
+    "contrastFloor": "4.5:1 under 18px, 3:1 at 18px+, measured against the actual backdrop, not the page background",
+    "greyscaleTest": "hierarchy must survive greyscale with motion off"
+  },
+  "directions": [
+    {
+      "id": "quiet-instrument",
+      "pole": "authored / material",
+      "thesis": "It says less than it knows.",
+      "palette": {
+        "vocabulary": "derive-from-photograph; neutral base + exactly one accent",
+        "ground": "#faf9f5",
+        "ink": "#121211",
+        "muted": "#595956",
+        "accent": "#9e7e50",
+        "accentDeepText": "#896e46",
+        "accentSource": "raw linen fiber",
+        "baseSource": "Japanese dry pine ink",
+        "hairline": "#e3e1d5"
+      },
+      "composition": "asymmetric 7/5 split; oversized headline against one dominant photograph",
+      "typePosture": {
+        "register": "warm editorial serif",
+        "display": "Instrument Serif",
+        "body": "Geist",
+        "mono": "Spline Sans Mono"
+      },
+      "markTreatment": "chosen slowly — rejected attempts kept visible at reduced weight with the reason each was dropped",
+      "imagery": "yes — material, in situ",
+      "voice": {
+        "language": "concrete, material — matter, grain, ink, hand",
+        "rhythm": "longer than efficient; ends on the quiet word",
+        "formality": "first person plural; warm, not familiar",
+        "prohibition": "never explain its own quality"
+      },
+      "spacing": { "base": 8, "sideMargin": 80, "sectionRhythm": 120, "note": "two known exceptions on the base step: Hero 112, Material-Palette 80 — compositional, not errors" },
+      "sourceRefs": ["color-material-palette-inspiration", "hero-inspiration", "minimalist-font-inspiration", "restrained-brand-posters-inspiration"]
+    },
+    {
+      "id": "specimen",
+      "pole": "engineered / systematic",
+      "thesis": "No adjective that cannot be measured.",
+      "palette": {
+        "vocabulary": "monochrome base derived from a single hue; exactly one accent, appearing fewer than 5 times, never a background",
+        "ground": "#f1f2f5",
+        "groundAlt": "#ffffff",
+        "ink": "#131416",
+        "muted": "#646870",
+        "accent": "#1b52e8",
+        "hairline": "#d4d7e1"
+      },
+      "composition": "gridded — visible modular grid, rules and tick marks as aesthetic, numbered reading order (01, 02, 03...)",
+      "typePosture": {
+        "register": "cool geometric spec-sheet",
+        "display": "Outfit",
+        "body": "Outfit",
+        "mono": "Fira Code",
+        "weights": ["400 Regular", "600 SemiBold", "700 Bold", "800 ExtraBold"],
+        "weightsNote": "measured, not the two earlier-declared-wrong counts (twelve / three) — four is what the board actually uses"
+      },
+      "markTreatment": "systematic permutation — 24-cell grid shown, one selected; process is the proof",
+      "imagery": "none — a deliberate departure from the imagery principle, flagged not hidden",
+      "voice": {
+        "language": "nouns, numerals, units",
+        "rhythm": "short; fragments allowed; three beats then stop",
+        "formality": "impersonal; instructional, not persuasive",
+        "prohibition": "no unmeasurable adjective is admissible"
+      },
+      "spacing": { "base": 4, "primarySteps": [8, 16, 24, 32, 64, 96], "note": "declared 4/8/16/32/64/128 was wrong; 128 unused, six values used and undeclared — this is the corrected, measured scale" },
+      "sourceRefs": ["number-type-inspiration", "minimalist-font-inspiration", "wireframe-inspiration"]
+    },
+    {
+      "id": "dark-archive",
+      "pole": "synthesis (not a third pole) — systematic cataloguing of specimen + the photograph-led restraint of quiet-instrument",
+      "thesis": "It records. It does not persuade.",
+      "palette": {
+        "vocabulary": "dark ground; measured gold accent",
+        "ground": "#0b0c10",
+        "ink": "#f5f6f9",
+        "muted": "#8f929d",
+        "accent": "#d4af37",
+        "hairline": "#212330"
+      },
+      "composition": "measured — spec table + legibility ladder; catalogued, dated, numbered entries",
+      "typePosture": {
+        "register": "institutional",
+        "display": "Spectral",
+        "body": "Manrope",
+        "mono": "JetBrains Mono"
+      },
+      "markTreatment": "measured, not chosen or permuted — gold measurement rules, an 8-row spec table, a legibility ladder naming where the mark stops working (20px passes, 14px fails -> use wordmark)",
+      "imagery": "yes — technical, catalogued; no lifestyle photography",
+      "voice": {
+        "language": "institutional — specimen, entry, register, provenance",
+        "rhythm": "even, mid-length, declarative",
+        "formality": "high; no contractions; dated and numbered",
+        "prohibition": "never claim rigor in adjectives"
+      },
+      "spacing": { "base": 8, "note": "baseline matrix; two off-scale values (6, 14) are Chief's own and were deliberately left alone" },
+      "sourceRefs": ["brand-wordmark-photography-inspiration", "editorial-mood-reference-inspiration", "wireframe-inspiration"],
+      "knownIssue": "hero copy claims '11 SECTIONS // SECURED'; board has 8 sections — stale claim, not yet corrected as of this file's writing"
+    }
+  ],
+  "provenance": "Every value above is transcribed from Project_Odysseus/ULYSSES-GUIDELINES.md (§3) and the grounding-audit.md contrast/spacing corrections, not re-derived. If those source files change, re-transcribe rather than hand-edit both places.",
+  "lastTranscribed": "2026-07-25"
+}

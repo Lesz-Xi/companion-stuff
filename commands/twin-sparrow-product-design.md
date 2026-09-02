@@ -1,5 +1,5 @@
 ---
-description: "Western product-design discipline for stunning, high-production landing and product pages, grounded in Dieter Rams functionalism: value clarity, function-first hierarchy, product narrative, proof,..."
+description: "Product-design discipline for stunning, high-production landing and product pages, grounded in Dieter Rams functionalism: value clarity, function-first hierarchy, product narrative, proof, conversi..."
 argument-hint: "<task, question, or artifact to apply this skill to>"
 ---
 

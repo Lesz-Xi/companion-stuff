@@ -1,5 +1,5 @@
 ---
-description: "Apply Japanese design doctrine grounded in Kenya Hara (ex-formation) and the Relics living web specimen: ma, shibui, typography, spacing, restraint, motion character, and surface critique. Use for..."
+description: "Two retained surface principles for Twin-Sparrow product/UI work: a minimal-spacing hierarchy (hairlines and ma over boxes and elevation) and a quiet hover-button effect. Not a full doctrine — use..."
 argument-hint: "<task, question, or artifact to apply this skill to>"
 ---
 

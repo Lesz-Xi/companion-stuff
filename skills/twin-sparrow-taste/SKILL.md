@@ -75,7 +75,7 @@ Compact doctrine:
 - Pressure triad: Linear structure, Capture One photographic instrumentality, Karimoku material soul — pressure, not costumes
 - Motion: comprehension instrument before aesthetic effect; soft blur only as scrub **recede**, never blur-in
 
-**Web context:** when the job is public/web/landing/product page taste, load `japanese-design` references `relics-language.md` + `motion-relics.md` and craft via `web-design`. Relics is the baseline web taste specimen — not MengTo defaults.
+**Web context:** when the job is public/web/landing/product page taste, load `japanese-design` and craft via `web-design`. Relics is the baseline web taste specimen — not MengTo defaults.
 
 ### Relics invariants for public web
 

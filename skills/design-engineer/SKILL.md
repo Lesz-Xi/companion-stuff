@@ -56,7 +56,7 @@ Apply layers in this order:
 7. **Error States** (from both skills) — Loading skeletons, error boundaries, empty states, retry flows — all designed, not just coded
 
 ## Output Format
-
+ x  x
 ```
 ## Design Direction
 - Reference: [which design language is being applied]

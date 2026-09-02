@@ -20,9 +20,8 @@ work: grid tokens, motion tokens, reveal mechanics, material execution, assembly
 and QA.
 
 **Primary Twin-Sparrow craft specimen:** Relics
-(`https://relics.quest`, local `Aura/showcase`). Load
-`../japanese-design/references/motion-relics.md` and
-`../japanese-design/references/relics-language.md` for numbers and mechanisms. Extract mechanisms — do not costume-clone the Relics page.
+(`https://relics.quest`, local `Aura/showcase`). Extract mechanisms directly from the
+specimen — do not costume-clone the Relics page.
 
 **Secondary / contrast archive:** MengTo's Aura.build web-design pack
 (`/Users/lesz/Developer/MengTo-Skills/agent-skills/web-design`) — admitted techniques
@@ -102,6 +101,80 @@ Distilled from: `agency-grid-layout-minimal`, `container-lines`, `framed-grid-la
 }
 ```
 
+### First-viewport completion proportions
+
+A hero is not a headline followed by whatever remains below it. Treat the first viewport
+as one constrained composition containing orientation, promise, and action.
+
+**Invariant at 100% zoom:** on ordinary target viewport proportions, the hero must show
+its complete promise, the dominant primary CTA, and any intentionally offered secondary
+action without clipping, overlap, or a required first scroll. If all three do not fit,
+the composition has failed even when the headline itself looks strong.
+
+Represent the hero as a vertical budget rather than independent margin and font values:
+
+| Vertical region | Starting share of `100svh` | Craft rule |
+|---|---:|---|
+| Header clearance / hero top | 9–11% | Clear fixed navigation; clamp to a practical pixel floor. |
+| Kicker + title approach | 4–7% | Compress before reducing action clearance. |
+| Three-line display field | 34–43% | Cap width-driven type with viewport height; include actual line-height and mask padding. |
+| Lower statement + actions | 16–22% | Measure wrapped copy, CTA height, action gap, and focus outline. |
+| Bottom reserve | 3–5% | Never let controls touch or cross the viewport edge. |
+| Remaining ma | Flexible, often 12–25% | Absorbs proportion differences through `auto`, not guessed fixed gaps. |
+
+These are starting proportions, not universal constants. Font metrics, number of display
+lines, navigation height, localized copy, and product action density can change the
+allocation. The invariant outranks the exact percentages.
+
+For a three-line editorial hero, this is an admitted starting pattern:
+
+```css
+:root {
+  --hero-top: clamp(82px, 10svh, 112px);
+  --hero-title-gap: clamp(24px, 4svh, 52px);
+  --hero-lower-gap: clamp(28px, 5svh, 60px);
+  --hero-bottom: clamp(20px, 3svh, 38px);
+}
+.hero {
+  min-height: 100svh;
+  padding-block: var(--hero-top) var(--hero-bottom);
+  display: flex;
+  flex-direction: column;
+}
+.hero-title {
+  margin-top: var(--hero-title-gap);
+  /* Width creates presence; height prevents action displacement. */
+  font-size: clamp(3.75rem, min(9.8vw, 16.4svh), 9.25rem);
+}
+.hero-lower {
+  margin-top: auto;
+  padding-top: var(--hero-lower-gap);
+}
+```
+
+Do not cargo-cult these values. Recompute the budget after real fonts load and after copy
+wraps. `svh` is preferred for first-screen guarantees because browser chrome can make
+plain `vh` optimistic on mobile.
+
+**Cut order when the viewport is over budget:**
+
+1. Remove decorative orbit, ambient media, or non-functional hero metadata.
+2. Reduce fixed vertical gaps and cap width-driven display scale by viewport height.
+3. Tighten or shorten copy without weakening the product promise.
+4. Let the secondary action wrap below the primary while keeping both visible.
+5. Only then reconsider the hero structure with `product-design` if the action set itself
+   is wrong.
+
+Never solve overflow by clipping the hero, hiding an intended action, shrinking controls
+below accessible size, or treating the secondary action as expendable because it is less
+visually dominant. Primary dominance and secondary availability are separate invariants.
+At 200% zoom, first-viewport completion is not required; correct reflow, reachability,
+focus visibility, and absence of horizontal loss are required.
+
+**Tradeoff:** height-capped type sacrifices some headline spectacle on wide, short
+viewports. That is the correct exchange: action visibility and user agency outrank maximal
+scale.
+
 ### Hairline structure
 
 Structure is shown with hairlines, not chrome:
@@ -118,6 +191,74 @@ Structure is shown with hairlines, not chrome:
   appears exactly once and signals something real (state, progress) or serves as a
   minimal brand anchor — never a decorative icon system repeated across the page.
 - Text clears frame lines through generous gutters. Copy never touches a rule.
+
+### Rule-adjacent copy and optical units
+
+A structural line should organize copy, never become the edge of the letterform field.
+Literal non-overlap is not enough: prose that begins exactly on a guide still feels
+crowded and makes the line compete with reading.
+
+**Invariant:** every rule-adjacent description has a deliberate optical interval, and
+every value + label pair is aligned as one semantic unit rather than as two unrelated
+text nodes.
+
+| Object | Starting proportion | Craft rule |
+|---|---:|---|
+| Vertical rule → prose | `14–24px`, preferably one grid gap | Use the larger value for calm desktop/editorial fields; preserve at least `14px` on compact layouts. |
+| Description measure | roughly `34–46ch` | Let copy wrap naturally; do not stretch it back to the rule to save one line. |
+| Description leading | `1.4–1.5` | Body descriptions need more air than labels or display copy. |
+| Value → label | `6–10px` | Center or align the wrapper; keep the pair's internal rhythm stable. |
+| Terminal/footer copy inset | `12–20px` | Clear shell guides and column rules; terminal copy must remain crisp and unhurried. |
+
+Admitted starting pattern:
+
+```css
+.rule-adjacent-copy {
+  max-width: 42ch;
+  padding-inline-start: clamp(14px, 1.25vw, 24px);
+  line-height: 1.45;
+  text-wrap: pretty; /* progressive enhancement */
+}
+.fact-cell--center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-inline: var(--grid-gap);
+  text-align: center;
+}
+.fact-cell--center .fact-label { margin-top: 8px; }
+.terminal-description {
+  padding-inline: clamp(12px, 1.25vw, 20px);
+  line-height: 1.4;
+}
+@media (max-width: 680px) {
+  .fact-cell--center {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    text-align: start;
+  }
+}
+```
+
+This pattern encodes relationships, not universal alignment. A middle fact in a
+three-column ledger may center its value-label pair while edge facts align outward. A
+footer location may center within its assigned column while a descriptive paragraph
+stays optically inset and left-aligned. Do not center every text node because one cell
+needed centering.
+
+**Responsive transformation:** when a narrow viewport turns stacked facts into rows,
+the pair may become `value ↔ label` with `justify-content: space-between`; preserve source
+order, baseline relationship, and at least the same rule clearance. The representation
+changes, but the semantic pair does not.
+
+**Cut order when copy becomes crowded:** reduce excess measure, adjust the grid span,
+allow a natural wrap, then transform the mobile arrangement. Do not remove the optical
+inset, shrink body type, or position the value and label independently to force a fit.
+
+**Tradeoff:** deliberate inset reduces available measure and can add a line of vertical
+height. That is the correct cost: readable hierarchy and calm structural separation
+outrank compactness.
 
 ### Split and image-first patterns
 
@@ -176,7 +317,7 @@ Gothic New, Klee One as sparse accent). This skill executes scale and rhythm.
 
 ## Motion Engineering
 
-**Primary numbers:** `../japanese-design/references/motion-relics.md` (Relics scrub + line mask).
+**Primary numbers:** the motion tokens table below (Relics scrub + line mask, self-contained).
 Secondary harvest: MengTo cinematic packs — only where they do not contradict Relics/Hara.
 
 Motion exists to explain hierarchy, confirm action, guide attention, and maintain
@@ -205,12 +346,30 @@ reveals). No elastic or bounce. **No blur-in entrances.** Soft blur is allowed o
 **scrub recede** when leaving the reading band (Relics). No animated layout properties.
 `will-change` only on elements that actually animate.
 
+### Hover mechanics (craft values)
+
+Hover *character* is decided by `japanese-design` (retained principle 2: quiet attention, not
+spectacle). These are the numbers that implement it.
+
+| Element | Mechanism |
+|---|---|
+| Primary button | Accent fill rises from below — `translateY(101% → 0)`. No glow. |
+| Ghost button | Underline reveal; no competing border box. |
+| Nav link | Opacity shift + hairline underline reveal. |
+| Logo | Quiet lift — `translateY(-3px)` + opacity; shared size in nav and footer. |
+
+Duration `--dur-micro` (160ms); easing `power3.out`. Hover never introduces a second primary
+action. No magnetic hover, custom cursors, or mouse-reactive layers.
+
+The original single-accent implementation used sage `#AFB9A7`. Recorded as provenance — the
+transferable rule is **one** accent colour, not this specific hex.
+
 ### Relics scrub API (preferred for Twin-Sparrow editorial web)
 
 Markup: `data-rv`, `data-rv-scale`, optional `data-rv-stay`; display heads `.disp` +
 `.lnw` / `.ln-line`. CSS vars: `--scrub-o`, `--scrub-y`, `--scrub-scale`, `--scrub-blur`.
 Progress from distance-to-viewport-center; lerp + rAF; Lenis `scroll` should schedule the
-same update. Full pseudocode and reduced-motion: `../japanese-design/references/motion-relics.md`.
+same update.
 
 Do not apply reversible scrub to terminal elements that cannot cross the reading band. `data-rv-stay` only holds an element clear after a geometrically possible center crossing; footers and final controls default to static clarity.
 
@@ -416,8 +575,15 @@ texture, and imagery removed.
 ### Assembly rules
 
 - Exactly one dominant primary CTA per page; secondary actions stay quiet.
+- A hero that intentionally presents primary and secondary actions must satisfy
+  **first-viewport completion** at 100% zoom: promise and both actions visible together.
+  Use a shared viewport budget; never let independent width-driven type silently consume
+  action space.
 - Proof is specific and static: named results, real artifacts, honest evidence. No logo
   marquees, no testimonial carousels, no scrolling trust theater.
+- Structural lines establish relation without becoming text edges: rule-adjacent prose
+  receives an optical inset, value-label pairs align as one unit, and terminal copy keeps
+  measured leading and line length.
 - Pricing and comparison surfaces optimize for reading, not steering: honest tables,
   plan descriptions in user outcomes, no fake urgency, no "recommended" theater unless
   the recommendation is argued.
@@ -426,6 +592,12 @@ texture, and imagery removed.
 
 ### QA checklist
 
+- **First-viewport completion:** at 100% zoom, verify the complete promise, primary CTA,
+  and intended secondary action at `1366×700`, `1440×900`, `1536×864`, `390×844`, and
+  `320×720`, plus the reported target viewport. Test after real fonts load. The CTA focus
+  outline and bottom reserve must remain inside the viewport.
+- **Zoom reflow:** at 200% zoom, actions may move below the fold but remain reachable,
+  ordered, focus-visible, and free of horizontal clipping.
 - Reduced motion: full content, no scrub, no pin, no smooth scroll.
 - JS disabled: text and content visible (reveal CSS gated on a `js`/`has-motion` class).
 - Mobile: pins simplified or removed; stagger reduced; touch gets no hover-dependent
@@ -433,6 +605,15 @@ texture, and imagery removed.
 - No CLS from reveals or pins; pinned sections hand off cleanly.
 - Canvas/DPR clamped 1–2 on any heavy surface; `ctx.revert()` verified on SPA routes.
 - Contrast passes on both themes; text clears all frame lines; focus states visible.
+- **Rule-clearance audit:** at 100% zoom, rule-adjacent descriptions preserve a deliberate
+  `14–24px` optical interval, approximately `34–46ch` measure, and `1.4–1.5` leading.
+  Inspect actual wraps after fonts load; no first glyph should appear attached to a guide.
+- **Optical-unit audit:** value + label pairs center or align through their shared wrapper.
+  Check the middle cell of three-column fact rows independently; on mobile, verify that
+  any stacked-to-row transformation preserves source order and baseline relationship.
+- **Terminal-copy audit:** footer and closing descriptions remain inset, measured, and
+  crisp; location lines center within their assigned column only when that relation is
+  semantically intended.
 - **Trace ledger:** when used, preserve a 7/5 reading composition, one active hairline, and one active state; no dashboard containers or fake telemetry.
 - **Causal handoff:** measure source and target edges; stretch before descent; use transform/opacity only; no pin or scroll trap; reduced motion resolves to aligned static rules.
 - **Endpoint audit:** at maximum scroll inspect computed `opacity`, `filter`, and `transform`; footers, legal copy, and final controls must resolve to `1`, `none`, and `none` unless a different state is explicitly functional.
@@ -531,8 +712,10 @@ Compact responses for small craft tasks; full format for page-level builds.
 
 A good response: emits the acknowledge line; routes layer questions up instead of
 absorbing them; gives concrete tokens and a build order, not adjectives; strips banned
-flourishes from any recipe it adapts; enforces reduced-motion and the QA floor; names the
-tradeoff; refuses banned defaults with the earn-back and alternative.
+flourishes from any recipe it adapts; enforces first-viewport completion when the hero
+contains actions, rule clearance and optical-unit alignment around structural lines,
+reduced-motion, and the QA floor; names the tradeoff; refuses banned defaults with the
+earn-back and alternative.
 
 A bad response: silently restyles structure the upper layers own; invents surface
 doctrine; applies glass, gradients, glow, or scroll-jacking because the request sounded
@@ -552,6 +735,14 @@ omits the tradeoff.
 5. "Add scroll storytelling to the product page." → Pin discipline applied; no
    scroll-jacking; reduced-motion policy stated; narrative decisions escalated to
    `product-design`.
+6. "The hero CTA is cut off at 100% zoom." → Re-encode the hero as a shared `100svh`
+   budget; cap width-driven display scale by height; anchor the lower action group with
+   flexible ma; preserve both intended actions; verify the viewport matrix and 200% zoom
+   reflow.
+7. "This description hugs the vertical rule; center the value and label; polish the
+   footer copy." → Apply proportional rule clearance and measured leading; align the
+   value-label wrapper as one optical unit; transform the pair responsibly on mobile;
+   audit terminal descriptions independently instead of applying blanket centering.
 
 ## Command Name
 
