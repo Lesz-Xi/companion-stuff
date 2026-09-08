@@ -37,7 +37,7 @@ Concrete triggers:
 
 ## Enforcement Gate
 
-Every collaborative claim, build, or disagreement covered by this skill must satisfy **all five** of the following before it's considered handled. A status report with no provenance is not evidence-carrying. A build that names the request's noun without checking its object is not done. A concession that defends before it retracts is not cheap. An argument settled by rhetoric instead of a fact is not resolved. A review conducted by whoever has the most invested in the claim being true is not a review.
+Every collaborative claim, build, or disagreement covered by this skill must satisfy **all six applicable gates** below before it's considered handled. Gate 6 applies to an active multi-agent round; it does not invent a peer or block solo maintenance/handoff preparation. A status report with no provenance is not evidence-carrying. A build that names the request's noun without checking its object is not done. A concession that defends before it retracts is not cheap. An argument settled by rhetoric instead of a fact is not resolved. A review conducted by whoever has the most invested in the claim being true is not a review.
 
 ### 1. Provenance Gate — no claim ships bare
 
@@ -83,7 +83,29 @@ A claim is checked by whoever has the least invested in it being true. Prefer a 
 
 ---
 
+### 6. Coms-Wait / Freshness Gate — observe, read, then act
+
+For an active multi-agent round, use **Bash to inspect the actual project `Coms/`**, not memory of the last conversation. The mailbox belongs to the agreed project/round root, not the canonical tools installation: one shared mailbox for collaborating seats, separate mailboxes for unrelated projects, and independent baselines per seat. Seats in separate worktrees must pass the same explicit round root. Before substantive analysis/design/build, the initial companion Coms must have landed and been read in full. Initial coordination posts and mailbox/evidence reads are allowed to establish that state.
+
+- **Before and after each bounded work unit**, and before integration or declaring completion, compare the mailbox with this seat's last reconciled content-hash snapshot. Check at safe checkpoints during long work; do not run an entire phase on one stale check.
+- **Read new/edited relevant messages in full**, and read referenced artifacts required for the decision. Inspect changed filenames first to establish sender, recipient, topic and supersession. Tool-output truncation requires paginated reads, not an assumption that the rest was read. Record message paths/hashes and outstanding requests in the seat's working state.
+- **A snapshot is an observation, not a read receipt.** Capture a candidate before reading; promote it to this seat's reconciled baseline only after accounting for its changes and confirming no drift with a fresh comparison. If state was lost, missing or invalid, reconcile the mailbox anew; do not silently reset to “everything read.” Each seat owns its own baseline outside `Coms/`.
+- **Wait through bounded polling** when a companion reply/review is required. Use a content baseline, never a hard-coded message count or numeric threshold. The executable recipe is in `agent-collab-architecture/activation-template.md` under **Mailbox check / wait procedure**, using the canonical `companion-observatory/harness/mailbox.py` helper.
+- **Interpret the change before proceeding.** An own post, unrelated reply, deletion, old approval or empty/partial message does not satisfy the awaited request. Validate sender/topic/request and any delivery evidence. A response that arrives during work can invalidate the plan; stop dependent work and reconcile it.
+- **On timeout or read/I/O error, surface the blocker.** Name the awaited reply, baseline and outcome; silence is never approval. Do not reset the timeout in an unbounded loop. Continue only explicitly independent, already agreed work; otherwise stop for the companion/Chief.
+- **Deliver → post → recheck.** After writing the artifact, post its evidence-bearing Coms, account for your own post and any concurrent peer messages, and recheck before dependent work or final handoff. Do not overwrite another seat's baseline or mark its messages read for it.
+
+The helper reports content changes/timeouts/errors and never advances the baseline. `check.py` validates artifact pointers; `serve.py` is a spectator surface. Neither proves message consumption. A background Bash watcher cannot wake an inactive agent or prove reading; orchestration must invoke the check and the agent must perform the read. The gate remains protocol-enforced unless a host explicitly wires it into execution.
+
+**Failure mode this catches:** two agents posting valid evidence while continuing from stale instructions, or an already-passed message-count threshold falsely unblocking a dependency.
+
+---
+
 ## Protocol
+
+### Stage 0 — In an active round, reconcile and satisfy Coms-wait
+
+Apply Gate 6 using the canonical Bash recipe before work and at the required checkpoints. Keep the awaited request explicit. Detection is not reading; reading is not approval.
 
 ### Stage 1 — Before you claim it, source it
 
@@ -130,6 +152,8 @@ Do not present an inference as a fact. Do not let "probably fine" travel silentl
 - Continuing to argue a design disagreement past the point where a cheap check could settle it
 - Reviewing your own claim and delivering the verdict as if it came from someone with no stake in it
 - Treating this skill as a courtesy ritual rather than a gate — if a claim doesn't carry evidence, it isn't done, regardless of how confident it reads
+- Treating `check.py`, an open observatory, a background watcher, or a new snapshot as proof that peer Coms were read
+- Advancing a baseline over unread messages, waiting on an old count, or accepting silence/own posts/unrelated messages as a required reply
 
 ---
 

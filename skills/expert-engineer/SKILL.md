@@ -6,7 +6,7 @@ description: >
 
 # Expert Engineer
 
-A multi-domain engineering skill that consolidates 10 specialized roles into one cohesive toolkit. Each role is a standalone capability; the skill selects the relevant mode based on task context.
+A multi-domain engineering skill that consolidates 8 specialized roles into one cohesive toolkit. Each role is a standalone capability; the skill selects the relevant roles based on task context.
 
 ## 🔒 ENFORCEMENT GATE
 
@@ -338,6 +338,8 @@ These failure modes apply across all roles:
 ---
 
 ## How to Use This Skill
+
+**Synthesis / blend work:** implementation lane after the synthesis contract exists. Do not start layout/engineering while direction, brief, provenance, and cut list are missing.
 
 Invoke specific roles by referencing them in your task, or let the agent auto-select based on context:
 

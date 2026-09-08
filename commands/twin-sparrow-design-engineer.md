@@ -1,5 +1,5 @@
 ---
-description: "Composite design-engineering skill combining japanese-design and expert-engineer for design-language matching, component architecture, design-system frontend work, accessibility, performance, and p..."
+description: "Composite design-engineering skill pairing a minimal, thin/micro, material UI/UX layout doctrine with expert-engineer implementation discipline — for layout architecture, component design, design-s..."
 argument-hint: "<task, question, or artifact to apply this skill to>"
 ---
 
