@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/cover.png" alt="Twin-Sparrow Agent Adapter cover — two sparrows on a quiet monochrome branch" width="1000">
+  <img src="./assets/cover.png" alt="Twin-Sparrow Agent Adapter cover — two sparrows on a wire" width="1000">
 </p>
 
 <h1 align="center">Twin-Sparrow Agent Adapter</h1>
